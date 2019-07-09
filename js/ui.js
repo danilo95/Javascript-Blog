@@ -1,27 +1,45 @@
 class UiKit{
 
-
      drawPost(posts,place){
-       
-        
       
         let spacetodraw= document.getElementById(place);
     for(let i=0; i<posts.length; i++){
-        let deleteelement= document.createElement("button");
-        let node= document.createTextNode('soy un button');
-        deleteelement.appendChild(node);
-        deleteelement.addEventListener('click', function(e){console.log('funciona')})
-        spacetodraw.innerHTML+=`<div class="post-preview">
-    <a href="article.html?${posts[i].id}"><h2 class="post-title"><i class="fas fa-bookmark"></i> ${posts[i].title}
-    </h2></a><h4 class="post-meta">${posts[i].subTitle}</h4><p class="post-meta">Posted by 
-    <a href="#">${posts[i].author}</a> on ${posts[i].createDate}</p><a href="edit.html?${posts[i].id}"><span class="badge badge-success">Edit</span></a>
-    <span class="badge badge-danger" id="delete" value="${posts[i].id}">Delete</span></div><hr>${deleteelement}  `;
-            }
+        let btn = document.createElement("span");   
+        btn.innerHTML = "delete";
+        btn.value=    posts[i].id;
+        btn.className='class="badge badge-danger';           
+        btn.addEventListener("click", (e) => {const http= new HttpRequest();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+              }).then((result) => {
+                if (result.value) {
+                    http.deleteById(`http://localhost:3000/posts/${e.target.value}`);
+                }
+               }).then(function(){ 
+                location.reload();
+                alert('item has been deleted')
+                })
+           })
+        
+            let newPost = document.createElement("div");
+            newPost.setAttribute("class", "post-preview");
+            newPost.innerHTML = `<a href="article.html?${posts[i].id}"><h2 class="post-title"><i class="fas fa-bookmark"></i> ${posts[i].title}
+            </h2></a><h4 class="post-meta">${posts[i].subTitle}</h4><p class="post-meta">Posted by 
+            <a href="#">${posts[i].author}</a> on ${posts[i].createDate}</p><a href="edit.html?${posts[i].id}"><span class="badge badge-success">Edit</span></a>
+          `
             
+            newPost.appendChild(btn);
+            spacetodraw.appendChild(newPost);
             
     
         }
-
+    }
         drawSinglePost(posts,place){
 
             let spacetodraw= document.getElementById(place);
@@ -50,15 +68,9 @@ class UiKit{
     
     }
 
-   callDelete(){
-    let container = document.querySelector('delete');
-    console.log(container);
-    /*container.addEventListener('eventType', e => {
-        if(e.target.classList.contains('badge badge-danger')){
-         console.log(e);
-        }
-      });*/
-
+   callDelete(id){
+   const http= new HttpRequest();
+   http.deleteById(`http://localhost:3000/posts/${id}`);
     }
 
 
@@ -80,6 +92,20 @@ class UiKit{
         body.value=posts[0].body;
 }
 
+getinfotoUpdate(idtoupdate){
+    infotosave={
+        id: idtoupdate,
+        title: document.getElementById('title').value,
+        subTitle:document.getElementById('subtitle').value,
+        image: document.getElementById('image').value,
+        body: document.getElementById('body').value,
+        createDate: 5,
+        likes: 5,
+        author: document.getElementById('author').value,
+        tags: document.getElementById('tags').value
+        
+        
+    }
+}
 
-//http://localhost:3000/posts/?_embed=comments
 }
