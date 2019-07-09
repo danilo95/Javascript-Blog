@@ -1,28 +1,47 @@
-class Handler{
+class Handler {
+  createRequest(url) {
+    fetch(url)
+    .then(response => {
+        if(response.status > 300){
+            throw new Error("error")
+        }
+        return response.json()
+    })
+    .catch(error => {
+       console.log("error CATCH", error)
+    })
+  }
 
-    async createRequest(url){
-        let response = await fetch(url);
-        let result = await response.json();
-        return result;
-    }
+  handleError = () => {
 
+  }
 
+   getPosts() {
+       this.createRequest(`http://localhost:3000/posts?_sort=id&_order=desc&_start=3&_end=11`)
+  }
+  get3LastPosts() {
+    return this.createRequest(
+      `http://localhost:3000/posts?_sort=id&_order=desc&_limit=3`, {
+        method: "GET"
+      });
+  }
+  getPostbyId(id) {
+    return this.createRequest(
+      `http://localhost:3000/posts?id=${id}&_embed=comments`, {
+        method: "GET"
+      });
+  }
 
-    getPosts(){
-        return this.createRequest(`http://localhost:3000/posts?_sort=id&_order=desc&_start=3&_end=11`);
-    } 
-    get3LastPosts(){
-        return this.createRequest(`http://localhost:3000/posts?_sort=id&_order=desc&_limit=3`);
-    } 
-    getPostbyId(id){
-      
-        return this.createRequest(`http://localhost:3000/posts?id=${id}&_embed=comments`);
-    
-    } 
+  deleteItem(id) {
+    return this.createRequest(`http://localhost:3000/posts/${id}`, {
+      method: "DELETE"
+    });
+  }
 
-    deleteItem(id){
-        return this.createRequest(`http://localhost:3000/posts/${id}`,{
-            method: 'DELETE'});
-    }
-
+  updateItem(id,formData) {
+    return this.createRequest(`http://localhost:3000/posts/${id}`, {
+        method: 'POST',
+        body: formData
+    });
+  }
 }

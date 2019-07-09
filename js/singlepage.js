@@ -1,6 +1,6 @@
 let locationtodraw='singlepost';
-const apis = new Handler();
+const apis = new HttpRequest();
 const uikits = new UiKit();
 let id = window.location.search.substring(1);
-apis.getPostbyId(id)
+apis.getData(`http://localhost:3000/posts?id=${id}&_embed=comments`)
 .then(array=>uikits.drawSinglePost(array,locationtodraw))

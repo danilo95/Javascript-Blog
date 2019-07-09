@@ -67,12 +67,12 @@
                     <small id="emailHelp" class="form-text text-muted">just put a URL.</small>
                   </div>
                   <div class="form-group">
-                        <label for="image">Title</label>
+                        <label for="title">Title</label>
                         <input type="text" class="form-control" id="title" >
                       </div>
                       <div class="form-group">
                             <label for="subtitle">Subtitle</label>
-                            <input type="text" class="form-control" id="title" >
+                            <input type="text" class="form-control" id="subtitle" >
                           </div>
                           <div class="form-group">
                                 <label for="author">author</label>
@@ -83,9 +83,10 @@
                                     <input type="text" class="form-control" id="tags" >
                                   </div>
                                   <div class="form-group">
-                                        <label for="tags">tags</label>
-                                        <textarea id="tags" class="form-control"></textarea>
+                                        <label for="body">Body</label>
+                                        <textarea id="body" class="form-control"></textarea>
                                       </div>
+                                      <button type="button" class="btn btn-success" id="save">Save</button>
         
       </div>
     </div>
@@ -137,8 +138,8 @@
   <!-- Custom scripts for this template -->
   <script src="js/clean-blog.min.js"></script>
   <script src="js/ui.js"></script>
-  <script src="js/handler.js"></script>
- 
+  <script src="js/httpRequest.js"></script>
+  <script src="js/editpage.js"></script>
 
 </body>
 
