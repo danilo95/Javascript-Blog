@@ -21,8 +21,9 @@ class UiKit{
               }).then((result) => {
                 if (result.value) {
                     http.deleteById(`http://localhost:3000/posts/${e.target.value}`);
-                    location.reload();
+                    
                 alert('item has been deleted')
+                location.reload();
                 }
                })
            })
