@@ -10,7 +10,7 @@ api.getData('http://localhost:3000/posts?_sort=id&_order=desc&_start=3&_end=11')
 
 api.getData('http://localhost:3000/posts?_sort=id&_order=desc&_limit=3')
 .then(array=>uikit.drawPost(array,lastcontent));
-uikit.callDelete();
+
 
 
 

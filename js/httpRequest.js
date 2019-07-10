@@ -28,7 +28,11 @@ class HttpRequest {
   }
 
   updateById = (url,data) => { 
-    return fetch(url, { method: "POST",body: JSON.stringify(data) })
+    return fetch(url, { method: "PUT",
+    body: JSON.stringify(data),
+    headers:{
+      'Content-Type': 'application/json'
+    } })
     .then(response => { 
       if(!response.ok){
         throw new Error(response)
