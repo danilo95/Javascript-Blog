@@ -1,5 +1,6 @@
 class UiKit{
 
+       
      drawPost(posts,place){
       
         let spacetodraw= document.getElementById(place);
@@ -20,11 +21,10 @@ class UiKit{
               }).then((result) => {
                 if (result.value) {
                     http.deleteById(`http://localhost:3000/posts/${e.target.value}`);
-                }
-               }).then(function(){ 
-                location.reload();
+                    location.reload();
                 alert('item has been deleted')
-                })
+                }
+               })
            })
         
             let newPost = document.createElement("div");
@@ -81,15 +81,16 @@ class UiKit{
         let title=document.getElementById('title');
         let subtitle=document.getElementById('subtitle');
         let imageurl=document.getElementById('image');
-        let tags=document.getElementById('tags');
-        let author=document.getElementById('author');
+        let author=document.getElementById('authorhide');
         let body=document.getElementById('body');
+        let tags=document.getElementById('tagshide');
         imageurl.value=posts[0].image;
         title.value=posts[0].title;
         subtitle.value=posts[0].subTitle;
         author.value=posts[0].author;
-        body.tags=posts[0].tags;
+        tags.value=posts[0].tags;
         body.value=posts[0].body;
+      
 }
 
 getinfotoUpdate(idtoupdate){
@@ -107,5 +108,50 @@ getinfotoUpdate(idtoupdate){
         
     }
 }
+
+drawtags(post){
+    
+    let tags=document.getElementById('tagsplace');
+    let tagsvalues=document.getElementById('tagshide').value
+    let elementtags=document.getElementById('tags');
+    let tagsarray = tagsvalues.split(',');  
+    post.forEach(tag => { 
+    tags.innerHTML +=`<span class="badge badge-primary" style="cursor: pointer;" id="${tag.id}">${tag.id}-${tag.name}</span>  `
+    tagsarray.forEach(tag2=>{
+        if(tag2==tag.id){
+            elementtags.value+=`${tag.name},`
+        }
+    })
+})
+
+     
+
+}
+
+drawAuthor(post){
+
+
+        let actualname=document.getElementById('authorhide').value
+        let authorelement=document.getElementById('author');
+        
+        post.forEach(data => { 
+            let selectfield=document.getElementById('FormControlSelect1');
+            var option = document.createElement("option");
+            option.text = data.name+" "+data.lastName;
+            selectfield.appendChild(option);
+           
+            if(actualname==data.id){
+                authorelement.value+=`${data.name} ${data.lastName}`
+               
+            }
+       
+    })
+    
+         
+    
+    
+
+}
+
 
 }

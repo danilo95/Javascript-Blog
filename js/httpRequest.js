@@ -27,6 +27,7 @@ class HttpRequest {
     .catch(error => error)  
   }
 
+  
 
   
 

@@ -76,18 +76,27 @@
                           </div>
                           <div class="form-group">
                                 <label for="author">author</label>
-                                <input type="text" class="form-control" id="author" >
+                                <input type="text" class="form-control" id="author" disabled ><br>
+                                <small id="emailHelp" class="form-text text-muted">  Choose a new Author</small>
+                                <div id="authorsplace">
+                                  <select class="form-control" id="FormControlSelect1">
+                                    </select>
+                                </div>
+                                <input id="authorhide" name="authorhide" type="hidden">
                               </div>
                               <div class="form-group">
+                                 
                                     <label for="tags">tags</label>
                                     <input type="text" class="form-control" id="tags" >
+                                    <small id="emailHelp" class="form-text text-muted">you can only choose between these options</small>
+                                    <div id="tagsplace"></div>
                                   </div>
                                   <div class="form-group">
                                         <label for="body">Body</label>
                                         <textarea id="body" class="form-control"></textarea>
                                       </div>
                                       <button type="button" class="btn btn-success" id="save">Save</button>
-        
+                                      <input id="tagshide" name="tagshide" type="hidden">
       </div>
     </div>
   </div>
