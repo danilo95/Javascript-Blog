@@ -1,6 +1,7 @@
 class UiKit {
   drawPost(posts, place) {
     let spacetodraw = document.getElementById(place);
+    spacetodraw.innerHTML="";
     for (let i = 0; i < posts.length; i++) {
       let btn = document.createElement("span");
       btn.innerHTML = "delete";
@@ -50,7 +51,6 @@ class UiKit {
   }
 
   drawcoments(posts,place) {
-      console.log(posts)
     let spacetodraw = document.getElementById(place);
     for (let i = 0; i < posts.length; i++) {
       spacetodraw.innerHTML += `
@@ -178,6 +178,20 @@ class UiKit {
     });
   }
 
+
+
+  drawfilterbytags(tagsarray){
+    
+      let selectitem = document.getElementById("mytagsplace");
+  
+      tagsarray.forEach(tag => {
+        selectitem.innerHTML += `<span class="badge badge-primary" style="cursor: pointer;"  id="${
+          tag.id}">${tag.name}</span> `;})
+    }
+
+    
+
+  
   validatetaskexist(tasks, id) {
     return tasks.includes(id);
   }
@@ -198,7 +212,7 @@ class UiKit {
             const userName = users.find(user => user.id === comment.usuario);
             comment.UserName = userName.name;           
         })
-        console.log(comments)
+       
         this.drawcoments(comments,placetodraw)
         
     });    
