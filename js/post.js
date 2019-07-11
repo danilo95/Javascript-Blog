@@ -11,6 +11,7 @@ class Post {
   }
 
   GetDatatoUpdate(id) {
+   
     let date = this.giveDateFormat();
     let update = {
       id: id,
@@ -20,7 +21,7 @@ class Post {
       body: this.body.value,
       createDate: date,
       likes: this.likes,
-      author: this.author.dataset.id,
+      author: parseInt(this.author.dataset.id),
       tags: this.tags.dataset.id
     };
 

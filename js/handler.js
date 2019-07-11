@@ -44,4 +44,11 @@ class Handler {
         body: formData
     });
   }
+
+  updateLikes(id,formData) {
+     this.createRequest(`http://localhost:3000/posts/${id}`, {
+        method: 'POST',
+        body: formData
+    });
+  }
 }

@@ -10,7 +10,7 @@ class HttpRequest {
       .then(result => {
         return result;
       })
-      .catch(error => error);
+      .catch(error => alert('Data not Found'));
   };
 
   deleteById = url => {
@@ -66,4 +66,27 @@ class HttpRequest {
       })
       .catch(error => error);
   };
+
+
+  updateLikesById = (url, data) => {
+    return fetch(url, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response);
+        }
+        return response.json();
+      })
+      .then(result => {
+        return result;
+      })
+      .catch(error => error);
+  };
+
+
 }

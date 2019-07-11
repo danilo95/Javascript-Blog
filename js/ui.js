@@ -1,7 +1,10 @@
 class UiKit {
   drawPost(posts, place) {
     let spacetodraw = document.getElementById(place);
-    spacetodraw.innerHTML="";
+    spacetodraw.innerHTML = "";
+    if (posts.length == 0) {
+      spacetodraw.innerHTML = "<br>No Data Found";
+    }
     for (let i = 0; i < posts.length; i++) {
       let btn = document.createElement("span");
       btn.innerHTML = "delete";
@@ -32,6 +35,7 @@ class UiKit {
     let spacetodraw = document.getElementById(place);
     for (let i = 0; i < posts.length; i++) {
       spacetodraw.innerHTML += `<div class="post-preview">
+      
             <a ><h1 class="post-title"><i class="fas fa-bookmark"></i> ${
               posts[0].title
             }
@@ -39,9 +43,11 @@ class UiKit {
             <small class="text-muted">${posts[0].subTitle}</small><br>
             <h3 class="post-subtitle text-justify">${posts[0].body}</h3>
             </a><p class="post-meta">Posted by 
-            <a href="#">${posts[0].author}</a> on ${
+            <a>${posts[0].author}</a> on ${
         posts[0].createDate
-      }  <i class="fa fa-thumbs-up" aria-hidden="true"></i> ${posts[0].likes}  
+      }  <i class="fa fa-thumbs-up" aria-hidden="true"></i> <span id="likes" value="${
+        posts[0].likes
+      }">${posts[0].likes} </span> 
             </p></div><hr>
            
            
@@ -50,11 +56,13 @@ class UiKit {
     }
   }
 
-  drawcoments(posts,place) {
+  drawcoments(posts, place) {
     let spacetodraw = document.getElementById(place);
     for (let i = 0; i < posts.length; i++) {
       spacetodraw.innerHTML += `
-        <small class="text-muted">Posted By:  <span class="badge" id="authorspan">${posts[i].UserName}</span></small>
+        <small class="text-muted">Posted By:  <span class="badge" id="authorspan">${
+          posts[i].UserName
+        }</span></small>
         <br><strong>${posts[i].comment}<br><hr></p>`;
     }
   }
@@ -73,12 +81,14 @@ class UiKit {
     let author = document.getElementById("authorhide");
     let body = document.getElementById("body");
     let tags = document.getElementById("tagshide");
+    let likes = document.getElementById("likes");
     imageurl.value = posts[0].image;
     title.value = posts[0].title;
     subtitle.value = posts[0].subTitle;
     author.value = posts[0].author;
     tags.value = posts[0].tags;
     body.value = posts[0].body;
+    likes.value = posts[0].likes;
   }
 
   getinfotoUpdate(idtoupdate) {
@@ -89,7 +99,7 @@ class UiKit {
       image: document.getElementById("image").value,
       body: document.getElementById("body").value,
       createDate: 5,
-      likes: 5,
+      likes: document.getElementById("likes").value,
       author: document.getElementById("author").value,
       tags: document.getElementById("tags").value
     };
@@ -166,59 +176,70 @@ class UiKit {
     let selectitem = document.getElementById("tagsplace");
 
     selectitem.addEventListener("click", e => {
-      let elementtags = document.getElementById("tags");
-      let tagsvalues = document.getElementById("tagshide").value;
-      this.validatetaskexist(tagsvalues, e.target.id);
-      if (this.validatetaskexist(tagsvalues, e.target.id)) {
-        alert("value alredy exist");
-      } else {
-        elementtags.dataset.id += `${e.target.id},`;
-        elementtags.value += `${e.target.innerText},`;
+      if (e.target.tagName == "SPAN") {
+        let elementtags = document.getElementById("tags");
+        let tagsvalues = document.getElementById("tagshide").value;
+        this.validatetaskexist(tagsvalues, e.target.id);
+        if (this.validatetaskexist(tagsvalues, e.target.id)) {
+          alert("value alredy exist");
+        } else {
+          elementtags.dataset.id += `${e.target.id},`;
+          elementtags.value += `${e.target.innerText},`;
+        }
       }
     });
   }
 
+  drawfilterbytags(tagsarray) {
+    let selectitem = document.getElementById("mytagsplace");
 
+    tagsarray.forEach(tag => {
+      selectitem.innerHTML += `<span class="badge badge-primary" style="cursor: pointer;"  id="${
+        tag.id
+      }">${tag.name}</span> `;
+    });
+  }
 
-  drawfilterbytags(tagsarray){
-    
-      let selectitem = document.getElementById("mytagsplace");
-  
-      tagsarray.forEach(tag => {
-        selectitem.innerHTML += `<span class="badge badge-primary" style="cursor: pointer;"  id="${
-          tag.id}">${tag.name}</span> `;})
-    }
-
-    
-
-  
   validatetaskexist(tasks, id) {
     return tasks.includes(id);
   }
 
-  getusercoments(comments){   
-      let placetodraw='coments';
-    let idtosearch = comments.map((num)=> {
-        return `http://localhost:3000/users/${num.id}`;
+  getusercoments(comments) {
+    let placetodraw = "coments";
+    let idtosearch = comments.map(num => {
+      return `http://localhost:3000/users/${num.id}`;
     });
-      
+
     let requests = idtosearch.map(url => fetch(url));
 
     Promise.all(requests)
-  .then(responses =>  responses)
-  .then(responses => Promise.all(responses.map(r => r.json())))
-  .then(users => {
-     comments.map(comment => {
-            const userName = users.find(user => user.id === comment.usuario);
-            comment.UserName = userName.name;           
-        })
-       
-        this.drawcoments(comments,placetodraw)
-        
-    });    
+      .then(responses => responses)
+      .then(responses => Promise.all(responses.map(r => r.json())))
+      .then(users => {
+        comments.map(comment => {
+          const userName = users.find(user => user.id === comment.usuario);
+          comment.UserName = userName.name;
+        });
+
+        this.drawcoments(comments, placetodraw);
+      });
   }
- 
+
+  matchautors(post, placetodraw) { debugger
+    let idtosearch = post.map(num => {
+      return `http://localhost:3000/authors/${num.author}`;
+    });
+    console.log(idtosearch)
+    let requests = idtosearch.map(url => fetch(url));
+    Promise.all(requests)
+      .then(responses => responses)
+      .then(responses => Promise.all(responses.map(r => r.json())))
+      .then(users => { 
+        post.map(comment => { console.log(comment)
+          const userName = users.find(user => user.id === comment.author);
+          comment.author = userName.name;
+        });
+        this.drawSinglePost(post, placetodraw);
+      });
+  }
 }
-
-
-

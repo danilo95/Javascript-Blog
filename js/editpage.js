@@ -20,10 +20,16 @@ editapi.getData("http://localhost:3000/authors/").then(array => {
 
 let save = document.getElementById("save");
 save.addEventListener("click", e => {
-  let Update = put.GetDatatoUpdate(id);
-  editapi
-    .updateById(`http://localhost:3000/posts/${id}`, Update)
-    .then(alert("Updated info"));
+  const validateinputs = new Validation();
+  if (validateinputs.validationofInputs()) {
+    let Update = put.GetDatatoUpdate(id);
+    let actuallikes = document.getElementById("likes").value;
+    Update.likes = actuallikes;
+    editapi
+      .updateById(`http://localhost:3000/posts/${id}`, Update)
+      .then(alert("Updated info"))
+      .then(location.reload());
+  }
 });
 
 edituikits.changeAutor();
