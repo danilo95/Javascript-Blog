@@ -1,11 +1,14 @@
-let locationtodraw='singlepost';
-let commentslocation='coments';
+let locationtodraw = "singlepost";
+let commentslocation = "coments";
 const apis = new HttpRequest();
 const uikits = new UiKit();
 let id = window.location.search.substring(1);
+let coments = [];
 
-apis.getData(`http://localhost:3000/posts?id=${id}`)
-.then(array=>uikits.drawSinglePost(array,locationtodraw))
+apis
+  .getData(`http://localhost:3000/posts?id=${id}`)
+  .then(array => uikits.drawSinglePost(array, locationtodraw));
 
-apis.getData(`http://localhost:3000/posts/${id}/comments`)
-.then(array=>uikits.drawcoments(array,commentslocation))
+apis
+  .getData(`http://localhost:3000/posts/${id}/comments`)
+  .then(array => uikits.getusercoments(array));
