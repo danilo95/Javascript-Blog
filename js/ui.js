@@ -225,11 +225,10 @@ class UiKit {
       });
   }
 
-  matchautors(post, placetodraw) { debugger
+  matchautors(post, placetodraw) { 
     let idtosearch = post.map(num => {
       return `http://localhost:3000/authors/${num.author}`;
     });
-    console.log(idtosearch)
     let requests = idtosearch.map(url => fetch(url));
     Promise.all(requests)
       .then(responses => responses)
