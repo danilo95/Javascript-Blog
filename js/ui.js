@@ -234,7 +234,7 @@ class UiKit {
       .then(responses => responses)
       .then(responses => Promise.all(responses.map(r => r.json())))
       .then(users => { 
-        post.map(comment => { console.log(comment)
+        post.map(comment => { 
           const userName = users.find(user => user.id === comment.author);
           comment.author = userName.name;
         });

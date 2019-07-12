@@ -8,7 +8,7 @@ class Handler {
         return response.json()
     })
     .catch(error => {
-       console.log("error CATCH", error)
+      
     })
   }
 
