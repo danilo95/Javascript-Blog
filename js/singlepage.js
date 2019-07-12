@@ -23,6 +23,7 @@ prueba.addEventListener("click", e => {
     document.getElementById("likess").innerHTML = " thaks for the like!!";
     let actuallike = parseInt(document.getElementById("likes").innerText);
     actuallike = actuallike + 1;
+    document.getElementById('likes').innerHTML=actuallike;
     datatoupdate = { likes: actuallike };
     apis.updateLikesById(`http://localhost:3000/posts/${id}`, datatoupdate);
   }
