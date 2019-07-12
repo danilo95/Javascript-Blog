@@ -9,7 +9,7 @@ apis.getData(`http://localhost:3000/posts?id=${id}`).then(
   array => {
     uikits.matchautors(array, locationtodraw);
   }
-  // uikits.drawSinglePost(array, locationtodraw)
+
 );
 
 apis
