@@ -20,7 +20,7 @@ selectitem.addEventListener("click", e => {
   let livesearchvalue = (document.getElementById("livesearch").value = "");
   if (e.target.tagName == "SPAN") {
     api
-      .getData(`http://localhost:3000/posts?tags_like=${e.target.id}`)
+      .getData(`http://localhost:3000/posts?tags_like=${e.target.id}&_sort=id&_order=desc`)
       .then(array => uikit.drawPost(array, maincontent));
   }
 });
@@ -28,7 +28,12 @@ selectitem.addEventListener("click", e => {
 let livesearch = document.getElementById("livesearch");
 livesearch.addEventListener("keyup", e => {
   let livesearchvalue = document.getElementById("livesearch").value;
+  if(document.getElementById("livesearch").value==""){
+    api
+  .getData("http://localhost:3000/posts?_sort=id&_order=desc&_start=3&_end=11")
+  .then(array => uikit.drawPost(array, maincontent));
+  }else{
   api
-    .getData(`http://localhost:3000/posts?title_like=${livesearchvalue}`)
-    .then(array => uikit.drawPost(array, maincontent));
+    .getData(`http://localhost:3000/posts?title_like=${livesearchvalue}&_sort=id&_order=desc`)
+    .then(array => uikit.drawPost(array, maincontent)); }
 });
